@@ -13,6 +13,7 @@ jobs:
       AWS_LAMBDA_ALIAS: produccion  # Establece el valor de AWS_LAMBDA_ALIAS
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      region: ${{ secrets.region }}
 
     steps:
       - name: Checkout Code
