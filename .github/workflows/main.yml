@@ -27,7 +27,10 @@ jobs:
           aws configure set default.region $region
 
       - name: Publish Lambda Version
-        run: aws lambda publish-version --function-name $AWS_LAMBDA_NAME
+        run: |
+          aws lambda publish-version --function-name $AWS_LAMBDA_NAME
+          aws lambda create-alias --function-name $AWS_LAMBDA_NAME --name $alias --function-version $LATEST
+
 
       - name: Set AWS Lambda Alias
         run: echo "AWS_LAMBDA_ALIAS=$AWS_LAMBDA_ALIAS" >> $GITHUB_ENV
