@@ -11,6 +11,7 @@ echo "Implementando en el alias de Lambda: $alias"
 
 # Variables de entorno para el bucket S3 y la región de AWS
 BUCKET_NAME="kimelt-bucket"
+AWS_LAMBDA="kimelt"
 AWS_REGION="us-east-1"
 AWS_STACK="kimeltStack"
 RUTA=$(cd "$(dirname "$0")" && pwd)
@@ -20,6 +21,12 @@ if ! command -v aws &>/dev/null; then
     echo "Error: AWS CLI no está instalado en el sistema."
     exit 1
 fi
+
+# Configurar el alias de Lambda
+aws lambda create-alias --function-name $AWS_LAMBDA --name $alias --function-version \$LATEST
+
+# Publicar la versión de Lambda
+aws lambda publish-version --function-name $AWS_LAMBDA
 
 # Run generate_template.sh
 ./generate_template.sh
