@@ -40,18 +40,18 @@ pip install -r requirements.txt --target $DEPENDENCIES
 echo "Crear el archivo zip de las dependencias"
 cd dependencies
 echo $RUTA
-"C:/Program Files/7-Zip/7z" a -r $RUTA\\layer.zip .
+zip -r $RUTA/layer.zip .
 
 cd ..
 
 echo "Desplegar la aplicación"
 
 
-sam package --template-file $RUTA\\template.yaml --output-template-file $RUTA\\packaged.yaml --s3-bucket $BUCKET_NAME --region $AWS_REGION
-sam deploy --template-file $RUTA\\packaged.yaml --stack-name $AWS_STACK --capabilities CAPABILITY_IAM --region $AWS_REGION
+sam package --template-file $RUTA/template.yaml --output-template-file $RUTA/packaged.yaml --s3-bucket $BUCKET_NAME --region $AWS_REGION
+sam deploy --template-file $RUTA/packaged.yaml --stack-name $AWS_STACK --capabilities CAPABILITY_IAM --region $AWS_REGION
 echo "Eliminar la carpeta 'dependencies'"
 
-rm -rf $RUTA\\dependencies
-rm -f $RUTA\\packaged.yaml
-rm -rf $RUTA\\layer.zip
+rm -rf $RUTA/dependencies
+rm -f $RUTA/packaged.yaml
+rm -rf $RUTA/layer.zip
 echo "Terminando Deploy a las: $(date '+%Y-%m-%d %H:%M:%S')"
