@@ -1,28 +1,29 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Resources:
-  zeitplanFuncion:
+  kimelt:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: main.handler
+      FunctionName: kimelt
+      Handler: main.lambda_handler
       Runtime: python3.8
-      CodeUri: .
+      CodeUri: ./app
       Timeout: 10
       Events:
         zeitplanEquipoEliminar:
           Type: Api
           Properties:
-            Path: /v1/equipos/{equipo_id}
+            Path: /equipos/{equipo_id}
             Method: delete
         zeitplanEquipoObtener:
           Type: Api
           Properties:
-            Path: /v1/equipos/{equipo_id}
+            Path: /equipos/{equipo_id}
             Method: get
         zeitplanEquipoAgregar:
           Type: Api
           Properties:
-            Path: /v1/equipos
+            Path: /equipos
             Method: post
         zeitplanUsuarioEliminar:
           Type: Api
@@ -39,3 +40,11 @@ Resources:
           Properties:
             Path: /v1/usuario/
             Method: post
+      Layers:
+        - !Ref kimeltLayer
+  kimeltLayer:
+    Type: 'AWS::Serverless::LayerVersion'
+    Properties:
+      CompatibleRuntimes:
+        - python3.8
+      ContentUri: ./layer.zip
