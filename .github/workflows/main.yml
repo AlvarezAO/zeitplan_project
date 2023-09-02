@@ -30,7 +30,7 @@ jobs:
         run: aws lambda publish-version --function-name $AWS_LAMBDA_NAME
 
       - name: Update Version to Lambda
-        run: aws lambda update-alias --function-name $AWS_LAMBDA_NAME --name $AWS_LAMBDA_ALIAS --function-version $LATEST
+        run: aws lambda update-alias --function-name $AWS_LAMBDA_NAME --name $AWS_LAMBDA_ALIAS --function-version \$LATEST
 
       - name: Set AWS Lambda Alias
         run: echo "AWS_LAMBDA_ALIAS=$AWS_LAMBDA_ALIAS" >> $GITHUB_ENV
