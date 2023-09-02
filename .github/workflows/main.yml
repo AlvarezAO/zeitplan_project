@@ -1,0 +1,27 @@
+name: Deploy to Lambda
+
+on:
+  push:
+    branches:
+      - main  # Ejecutar este flujo de trabajo en la rama main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_LAMBDA_ALIAS: produccion  # Establece el valor de AWS_LAMBDA_ALIAS
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Set AWS Lambda Alias
+        run: echo "AWS_LAMBDA_ALIAS=$AWS_LAMBDA_ALIAS" >> $GITHUB_ENV
+
+      - name: Run Deployment Script
+        run: |
+          chmod +x deploy.sh  # Asegúrate de que el script sea ejecutable
+          ./deploy.sh  # Ejecuta el script de implementación
