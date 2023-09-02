@@ -18,6 +18,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v2
 
+      - name: Publish Lambda Version
+        run: aws lambda publish-version --function-name kimelt
+
       - name: Set AWS Lambda Alias
         run: echo "AWS_LAMBDA_ALIAS=$AWS_LAMBDA_ALIAS" >> $GITHUB_ENV
 
